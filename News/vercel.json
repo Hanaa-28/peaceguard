@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/analyze", "destination": "https://peaceguard.onrender.com/analyze" },
+    { "source": "/health",  "destination": "https://peaceguard.onrender.com/health" }
+  ]
+}
