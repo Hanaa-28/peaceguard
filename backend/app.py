@@ -7,8 +7,7 @@ from dotenv import load_dotenv
 from groq import Groq
 import PyPDF2
 from docx import Document
-import pytesseract
-from PIL import Image
+
 
 load_dotenv()
 
@@ -100,9 +99,7 @@ def extract_text_from_docx(file) -> str:
     return "\n".join(p.text for p in doc.paragraphs)
 
 
-def extract_text_from_image(file) -> str:
-    image = Image.open(file)
-    return pytesseract.image_to_string(image)
+
 
 
 def analyze_text(text: str) -> dict:
@@ -167,7 +164,7 @@ def analyze():
             elif filename.endswith('.docx'):
                 text = extract_text_from_docx(file)
             elif filename.endswith(('.jpg', '.jpeg', '.png')):
-                text = extract_text_from_image(file)
+                 return jsonify({"error": "Analyse d'images non disponible sur ce serveur"}), 400
             else:
                 return jsonify({"error": "Type de fichier non supporté. Acceptés : PDF, DOCX, JPEG/PNG"}), 400
         except Exception as e:
