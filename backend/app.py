@@ -13,7 +13,11 @@ load_dotenv()
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {
-    "origins": "*",
+    "origins": [
+        "http://localhost:5173",
+        "https://peaceguard-gr4mes6gz-ardjata-hanaas-projects.vercel.app",   # ← ton URL Vercel
+        "https://*.vercel.app"
+    ],
     "methods": ["GET", "POST", "OPTIONS"],
     "allow_headers": ["Content-Type", "X-API-Key"]
 }})
