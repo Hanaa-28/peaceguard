@@ -1,0 +1,58 @@
+/* Hate Speech Detector — Admin styles */
+
+.hsd-wrap h1 {
+    font-size: 22px;
+    margin-bottom: 20px;
+}
+
+.hsd-card {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-bottom: 20px;
+    max-width: 860px;
+}
+
+.hsd-card h2 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.hsd-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.hsd-badge-info {
+    background: #e8f4fd;
+    color: #185fa5;
+}
+
+.hsd-badge-warning {
+    background: #fef3e2;
+    color: #854f0b;
+}
+
+.hsd-badge-error {
+    background: #fdeaea;
+    color: #a32d2d;
+}
+
+.form-table td .description {
+    color: #666;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+.widefat td, .widefat th {
+    font-size: 13px;
+}

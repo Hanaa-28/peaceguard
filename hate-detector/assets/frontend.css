@@ -1,0 +1,148 @@
+/* ── Modale Hate Speech Detector ────────────────────────────────────────── */
+
+#hsd-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 99999;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  backdrop-filter: blur(3px);
+}
+
+#hsd-modal.hsd-modal-open {
+  display: flex;
+}
+
+#hsd-modal-box {
+  background: #fff;
+  border-radius: 14px;
+  padding: 32px;
+  max-width: 780px;
+  width: 100%;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.2);
+  animation: hsd-slide-in 0.25s ease;
+}
+
+@keyframes hsd-slide-in {
+  from { opacity: 0; transform: translateY(-20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+#hsd-modal-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+#hsd-modal-icon {
+  font-size: 26px;
+  line-height: 1;
+}
+
+#hsd-modal-header h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: #c0392b;
+}
+
+#hsd-modal-intro {
+  font-size: 14px;
+  color: #444;
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+
+#hsd-modal-intro strong {
+  color: #c0392b;
+}
+
+/* ── Colonnes original / reformulation ─────────────────────────────────── */
+
+.hsd-col-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+@media (max-width: 560px) {
+  .hsd-col-wrap { grid-template-columns: 1fr; }
+}
+
+.hsd-col label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #777;
+  margin-bottom: 6px;
+}
+
+.hsd-textbox {
+  background: #f8f8f8;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #333;
+  min-height: 90px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.hsd-rewrite {
+  background: #f0faf5;
+  border-color: #a8d5be;
+  color: #1a5c3a;
+}
+
+/* ── Boutons ────────────────────────────────────────────────────────────── */
+
+#hsd-modal-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+.hsd-btn {
+  flex: 1;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.1s;
+}
+
+.hsd-btn:hover  { opacity: 0.88; }
+.hsd-btn:active { transform: scale(0.98); }
+
+.hsd-btn-primary {
+  background: #27ae60;
+  color: #fff;
+}
+
+.hsd-btn-secondary {
+  background: #f0f0f0;
+  color: #555;
+  border: 1px solid #ddd;
+}
+
+/* ── Note légale ────────────────────────────────────────────────────────── */
+
+#hsd-modal-note {
+  font-size: 11px;
+  color: #999;
+  margin: 0;
+  text-align: center;
+  font-style: italic;
+}
