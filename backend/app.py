@@ -31,7 +31,7 @@ def add_cors_headers(response):
 
 # ── Configuration ──────────────────────────────────────────────────────────────
 GROQ_API_KEY  = os.getenv("GROQ_API_KEY", "")
-GROQ_MODEL    = os.getenv("GROQ_MODEL", "llama-3.1-8b-instant")
+GROQ_MODEL    = os.getenv("GROQ_MODEL", "qwen/qwen3.6-27b")
 API_SECRET_KEY = os.getenv("API_SECRET_KEY", "Len@1oan")
 
 # ── Prompt système ─────────────────────────────────────────────────────────────
