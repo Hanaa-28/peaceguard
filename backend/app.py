@@ -107,7 +107,7 @@ def extract_text_from_docx(file) -> str:
 
 
 def analyze_text(text: str) -> dict:
-    """Appelle Groq (Llama) pour analyser le texte."""
+    """Appelle Groq (qween) pour analyser le texte."""
     if not GROQ_API_KEY:
         return {"error": "GROQ_API_KEY manquante dans le fichier .env"}
 
@@ -196,4 +196,6 @@ def analyze():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port, debug=True)
+

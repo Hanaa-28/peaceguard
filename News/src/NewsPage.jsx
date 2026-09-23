@@ -564,11 +564,11 @@ const NewsPage = () => {
 
           {/* Zone statistiques IA */}
           {/* LLM INTEGRATION POINT — branché sur Groq via Flask /analyze */}
-          <div className="ai-zone" data-hook="groq-llama-integration">
+          <div className="ai-zone" data-hook="groq-qween-integration">
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 18 }}>
               <span style={{ fontSize: 18 }}>🤖</span>
               <h3 style={{ margin: 0, fontFamily: 'Merriweather,serif', fontSize: 16 }}>
-                Tableau de bord — PeaceGuard AI (Groq · {ARTICLES[0] && 'llama-3.1-8b-instant'})
+                Tableau de bord — PeaceGuard AI (Groq · {ARTICLES[0] && 'qwen/qwen3.6-27b'})
               </h3>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: 14 }}>
@@ -592,7 +592,7 @@ const NewsPage = () => {
               </div>
             </div>
             <div style={{ marginTop: 14, fontSize: 11, color: '#555', borderTop: '1px solid rgba(255,255,255,.08)', paddingTop: 12 }}>
-              🔌 Backend : <code style={{ background: 'rgba(255,255,255,.1)', padding: '1px 5px', borderRadius: 3 }}>Flask :5000 → Groq API → llama-3.1-8b-instant</code>
+              🔌 Backend : <code style={{ background: 'rgba(255,255,255,.1)', padding: '1px 5px', borderRadius: 3 }}>Flask :5000 → Groq API → qwen/qwen3.6-27b</code>
             </div>
           </div>
         </section>
@@ -601,7 +601,7 @@ const NewsPage = () => {
       {/* ── Footer ── */}
       <footer style={{ background: '#1a1a2e', color: '#888', textAlign: 'center', padding: 20, fontSize: 13, marginTop: 20 }}>
         © 2026 BurkinaInfo — L'actualité du Faso en temps réel &nbsp;·&nbsp;
-        <span style={{ color: '#4E9E91' }}>PeaceGuard AI</span> propulsé par Groq + Llama
+        <span style={{ color: '#4E9E91' }}>PeaceGuard AI</span> propulsé par Groq + qween
       </footer>
 
       {/* ── Modal révision (commentaire toxique) ── */}
