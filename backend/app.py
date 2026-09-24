@@ -31,44 +31,73 @@ def add_cors_headers(response):
 
 # ── Configuration ──────────────────────────────────────────────────────────────
 GROQ_API_KEY  = os.getenv("GROQ_API_KEY", "")
-GROQ_MODEL    = os.getenv("GROQ_MODEL", "qwen/qwen3.6-27b")
+GROQ_MODEL    = os.getenv("GROQ_MODEL", "qwen/qwen3.8-27b")
 API_SECRET_KEY = os.getenv("API_SECRET_KEY", "Len@1oan")
 
 # ── Prompt système ─────────────────────────────────────────────────────────────
 SYSTEM_PROMPT = """Tu es PeaceGuard AI, un assistant spécialisé dans la détection de discours haineux, toxicité, harcèlement et incitation à la violence.
 
-Tu dois analyser un texte fourni par l'utilisateur et produire une analyse claire et structurée afin de promouvoir une communication pacifique.
+Tu dois:
 
-Règles d'analyse :
-- Détecter si le texte contient : insultes, harcèlement, discrimination, discours haineux (ethnie, religion, genre, nationalité), menaces directes, incitation à la violence, agressivité excessive.
-- Tenir compte du contexte : éviter les faux positifs (ex : "ce film tue" n'est pas violent), reconnaître les phrases figurées ou humoristiques.
-- Attribuer un score de toxicité entre 0 et 100 : 0-30 = faible, 31-60 = moyen, 61-80 = élevé, 81-100 = critique.
-- Classifier la toxicité en une seule catégorie parmi : "insulte", "harcèlement", "discrimination", "discours haineux", "menace", "incitation à la violence", "non toxique".
-- Proposer une reformulation pacifique : neutre, respectueuse, non agressive, sans discrimination, conservant l'idée principale si possible.
-- Rester neutre et ne jamais encourager la haine, la violence ou l'attaque contre un groupe.
+Analyser un texte fourni par l’utilisateur et produire une analyse claire et structurée afin de promouvoir une communication pacifique.
 
-Format de sortie OBLIGATOIRE : JSON valide uniquement, sans texte autour, sans balises markdown.
+Règles d’analyse
+Tu dois détecter si le texte contient :
+insultes / harcèlement
+discrimination
+discours haineux (ethnie, religion, genre, nationalité, etc.)
+menaces directes
+incitation à la violence
+agressivité excessive
+Tu dois tenir compte du contexte :
+éviter les faux positifs (ex : "ce film tue" n’est pas violent)
+reconnaître les phrases figurées ou humoristiques
+Tu dois attribuer un score de toxicité entre 0 et 100 :
+0–30 : faible
+31–60 : moyen
+61–80 : élevé
+81–100 : critique
+Tu dois classifier la toxicité en une seule catégorie principale parmi :
+"insulte"
+"harcèlement"
+"discrimination"
+"discours haineux"
+"menace"
+"incitation à la violence"
+"non toxique"
+
+Tu dois proposer une reformulation pacifique du message :
+neutre
+respectueuse
+non agressive
+sans discrimination
+conservant l’idée principale si possible
+Tu dois rester neutre et ne jamais encourager la haine, la violence ou l’attaque contre un groupe.
+ Format obligatoire de sortie
+
+Tu dois répondre uniquement en JSON valide (sans texte autour).
+
+Le JSON doit respecter exactement ce schéma :
 
 {
   "toxic": true,
-  "toxicity_score": 72,
-  "risk_level": "élevé",
-  "category": "insulte",
-  "emotions": ["colère"],
-  "keywords": ["mot1", "mot2"],
-  "explanation": "Explication courte en 2 à 4 phrases.",
-  "peaceful_rewrite": "Version reformulée pacifiquement."
+  "toxicity_score": 0,
+  "risk_level": "faible",
+  "category": "non toxique",
+  "emotions": ["neutre"],
+  "keywords": [],
+  "explanation": "",
+  "peaceful_rewrite": ""
 }
-
-Contraintes :
-- toxic : boolean
-- toxicity_score : integer 0 à 100
-- risk_level : "faible" | "moyen" | "élevé" | "critique"
-- category : une seule valeur parmi la liste définie
-- emotions : 1 à 3 émotions maximum
-- keywords : mots/expressions exactes extraites du texte
-- explanation : 2 à 4 phrases maximum
-- peaceful_rewrite : phrase reformulée, respectueuse, claire"""
+Contraintes sur les champs
+toxic : boolean
+toxicity_score : integer (0 à 100)
+risk_level : "faible" | "moyen" | "élevé" | "critique"
+category : une seule valeur parmi la liste définie
+emotions : tableau contenant 1 à 3 émotions maximum
+keywords : tableau de mots/expressions exactes extraites du texte
+explanation : 2 à 4 phrases maximum
+peaceful_rewrite : phrase reformulée, respectueuse, claire"""
 
 
 # ── Helpers ────────────────────────────────────────────────────────────────────
@@ -114,17 +143,20 @@ def analyze_text(text: str) -> dict:
     try:
         client = Groq(api_key=GROQ_API_KEY)
         completion = client.chat.completions.create(
-            model=GROQ_MODEL,
-            messages=[
-                {"role": "system", "content": SYSTEM_PROMPT},
-                {"role": "user",   "content": text}
-            ],
-            temperature=0.3,          # plus déterministe pour le JSON
-            max_completion_tokens=1024,
-            top_p=1,
-            stream=False,
-            stop=None
-        )
+            model="openai/gpt-oss-120b",
+        messages=[
+      {
+        "role": "user",
+        "content": ""
+      }
+    ],
+    temperature=1,
+    max_completion_tokens=2048,
+    top_p=1,
+    reasoning_effort="medium",
+    stream=True,
+    stop=None
+)
         response_text = completion.choices[0].message.content
         return parse_json_response(response_text)
 
