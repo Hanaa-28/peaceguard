@@ -136,27 +136,24 @@ def extract_text_from_docx(file) -> str:
 
 
 def analyze_text(text: str) -> dict:
-    """Appelle Groq (qween) pour analyser le texte."""
+    """Appelle Groq pour analyser le texte."""
     if not GROQ_API_KEY:
         return {"error": "GROQ_API_KEY manquante dans le fichier .env"}
 
     try:
         client = Groq(api_key=GROQ_API_KEY)
         completion = client.chat.completions.create(
-            model="openai/gpt-oss-120b",
-        messages=[
-      {
-        "role": "user",
-        "content": ""
-      }
-    ],
-    temperature=1,
-    max_completion_tokens=2048,
-    top_p=1,
-    reasoning_effort="medium",
-    stream=True,
-    stop=None
-)
+            model=GROQ_MODEL,
+            messages=[
+                {"role": "system", "content": SYSTEM_PROMPT},
+                {"role": "user",   "content": text}
+            ],
+            temperature=0.3,
+            max_completion_tokens=1024,
+            top_p=1,
+            stream=False,
+            stop=None
+        )
         response_text = completion.choices[0].message.content
         return parse_json_response(response_text)
 
@@ -204,7 +201,7 @@ def analyze():
             else:
                 return jsonify({"error": "Type de fichier non supporté. Acceptés : PDF, DOCX, JPEG/PNG"}), 400
         except Exception as e:
-            return jsonify({"error": f"Erreur extraction texte : {str(e)}"}), 500
+            return jsonify({"error": "Erreur extraction texte : {str(e)}"}), 500
 
         if not text.strip():
             return jsonify({"error": "Aucun texte trouvé dans le fichier"}), 400
